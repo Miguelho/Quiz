@@ -13,7 +13,7 @@ exports.load = function(req, res, next, quizId) {
 };
 
 // GET /quizes
-exports.index = function(req, res,error) {
+exports.index = function(req, res, next) {
   models.Quiz.findAll({where:['pregunta like ?', "%"+req.query.search+"%"]
   , order: '`pregunta` ASC'}
   ).then(function(quizes) {
