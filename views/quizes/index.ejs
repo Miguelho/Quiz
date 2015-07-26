@@ -2,13 +2,19 @@
 <form method="get" action="/quizes" >
   <legend>
       Busca tu pregunta:
-      <input type="text" name="search"/>
+      <input type="text" name="search" />
       <input type="submit" value="Enviar"/>
       <br/>
       <a href="/quizes/new"><button type="button">Añadir pregunta</button></a>
-  </legend>
+      <!--<a href="/quizes"><button type="button">Pregunta random</button></a>-->
+
+</legend>
 </form>
 </div>
+
+<form method="get" action="/quizes/random" >
+  <input type="submit" value="Random"/>
+</form>
 
 <div id="preguntas">
 <table>

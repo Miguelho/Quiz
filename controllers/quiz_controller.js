@@ -19,9 +19,26 @@ exports.index = function(req, res, next) {
     order: 'pregunta ASC'}
       ).then(function(quizes) {
       res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+      console.log("CONSOLA LOG"+ quizes.length);
     }
   ).catch(function(error){next(error)});
 };
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// GET /quizes aleatorio
+exports.random = function(req,res,next) {
+  models.Quiz.findAll(
+    {where:['id = ?', getRandomInt(1,4)]}
+  ).then(function(quizes) {
+      res.render('quizes/random.ejs', {quizes: quizes, errors: []});
+      console.log("CONSOLA LOG"+ quizes.length);
+    }
+  ).catch(function(error){next(error)});
+};
+
 
 // GET /quizes/:id
 exports.show = function(req, res) {
