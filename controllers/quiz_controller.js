@@ -33,7 +33,7 @@ exports.random = function(req,res,next) {
   models.Quiz.findAll(
     {where:['id = ?', getRandomInt(1,4)]}
   ).then(function(quizes) {
-      res.render('quizes/random.ejs', {quizes: quizes, errors: []});
+      res.render('quizes/random', {quizes: quizes, errors: []});
       console.log("CONSOLA LOG"+ quizes.length);
     }
   ).catch(function(error){next(error)});
