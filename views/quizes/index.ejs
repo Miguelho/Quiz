@@ -3,9 +3,9 @@
   <legend>
       Busca tu pregunta:
       <input type="text" name="search"/>
+      <input type="submit" value="Enviar"/>
       <br/>
-      <br/>
-      <input type="submit" value="enviar"/>
+      <a href="/quizes/new"><button type="button">Añadir pregunta</button></a>
   </legend>
 </form>
 </div>
@@ -16,4 +16,6 @@
   <tr><td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr>
   <% } %>
 </table>
+
+
 </div>
