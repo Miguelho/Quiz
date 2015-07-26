@@ -13,16 +13,13 @@ exports.load = function(req, res, next, quizId) {
 };
 
 // GET /quizes
-exports.index = function(req, res) {
-
+exports.index = function(req, res,error) {
   models.Quiz.findAll({where:['pregunta like ?', "%"+req.query.search+"%"]
   , order: '`pregunta` ASC'}
   ).then(function(quizes) {
    res.render('quizes/index', { quizes: quizes});
  }
 ).catch(function(error) { next(error);})
-
-
 };
 
 // GET /quizes/question
