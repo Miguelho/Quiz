@@ -44,7 +44,7 @@ exports.answer = function(req, res) {
 
 
 exports.author = function(req, res) {
-   res.render('author',{title:'Créditos'});
+   res.render('author',{title:'Créditos', errors: []});
 };
 
 // GET /quizes/new

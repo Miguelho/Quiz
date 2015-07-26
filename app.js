@@ -50,7 +50,7 @@ if (app.get('env') === 'development') {
       errors: []
     });
   });
-}
+};
 
 // production error handler
 // no stacktraces leaked to user

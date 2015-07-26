@@ -27,8 +27,9 @@
   </nav>
 
   <section class="main" id="s1">
-    <% if (errors.length) { %>
+  <% if (errors.length) { %>
       <span id='ErrorMsgs'>
+
         Corregir errores:<br/>
         <% for (var i in errors) { %>
            <span> <%= errors[i].message %> </span><br/>
