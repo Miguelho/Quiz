@@ -1,5 +1,5 @@
 var models= require('../models/models.js');
-
+var numFilas=null;
 // Autoload :id
 exports.load = function(req, res, next, quizId) {
   models.Quiz.find(quizId).then(
@@ -19,23 +19,27 @@ exports.index = function(req, res, next) {
     var keys= porciento+ req.query.search.replace(' ', porciento) + porciento;
     models.Quiz.findAll({where:['pregunta like ?', keys],order: 'pregunta ASC'}).then(function(quizes) {
       res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-      console.log("CONSOLA LOG"+ quizes .length);
+      console.log("CONSOLA LOG"+ quizes.length);
+
     }).catch(function(error){next(error)});
 }else {
   models.Quiz.findAll().then(function(quizes) {
-    res.render('quizes/index.ejs', {quizes: quizes, errors: []})}
+    res.render('quizes/index.ejs', {quizes: quizes, errors: []})
+    numFilas = parseInt(quizes.length);
+  }
+
   )};
 };
 
-
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return parseInt(Math.floor(Math.random() * (max - min + 1)) + min);
 }
+
 
 // GET /quizes aleatorio
 exports.random = function(req,res,next) {
   models.Quiz.findAll(
-    {where:['id = ?', getRandomInt(1,4)]}
+    {where:['id = ?', getRandomInt(1, numFilas)]}
   ).then(function(quizes) {
     res.render('quizes/random', {quizes: quizes, errors: []});
     console.log("CONSOLA LOG"+ quizes.length);
