@@ -54,7 +54,7 @@ exports.random = function(req,res,next) {
 // GET /quizes/:id
 exports.show = function(req, res) {
   res.render('quizes/show', { quiz: req.quiz, errors: []});
-};
+};            // req.quiz: instancia de quiz cargada con autoload
 
 // GET /quizes/:id/answer
 exports.answer = function(req, res) {
@@ -78,7 +78,7 @@ exports.author = function(req, res) {
 // GET /quizes/new
 exports.new = function(req, res) {
   var quiz = models.Quiz.build( // crea objeto quiz
-    {pregunta: "Pregunta", respuesta: "Respuesta"}
+    {pregunta: "Pregunta", respuesta: "Respuesta", tematica:"tematica"}
   );
   res.render('quizes/new', {quiz: quiz, errors: []});
 };
@@ -92,7 +92,7 @@ exports.create = function(req, res) {
     } else {
       quiz // save: guarda en DB campos pregunta y respuesta de quiz
       .save(
-        {fields: ["pregunta", "respuesta"]}
+        {fields: ["pregunta", "respuesta","tematica"]}
       ).then(
         function(){ res.redirect('/quizes')
       });
@@ -100,3 +100,36 @@ exports.create = function(req, res) {
   }
 );
 };
+
+// GET /quizes/:id/edit
+exports.edit = function(req, res) {
+  var quiz = req.quiz;  // req.quiz: autoload de instancia de quiz
+
+  res.render('quizes/edit', {quiz: quiz, errors: []});
+};
+
+// PUT /quizes/:id
+exports.update = function(req, res) {
+  req.quiz.pregunta  = req.body.quiz.pregunta;
+  req.quiz.respuesta = req.body.quiz.respuesta;
+  req.quiz.tematica = req.body.quiz.tematica;
+  req.quiz
+  .validate()
+  .then(
+    function(err){
+      if (err) {
+        res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});
+      } else {
+        req.quiz     // save: guarda campos pregunta y respuesta en DB
+        .save( {fields: ["pregunta", "respuesta", "tematica"]})
+        .then( function(){ res.redirect('/quizes');});
+      }     // Redirección HTTP a lista de preguntas (URL relativo)
+    }
+  );
+};
+
+exports.destroy= function (req,res){
+  req.quiz.destroy().then( function(){
+    res.redirect('/quizes');
+  }).catch(function(error){next(error)});
+}
