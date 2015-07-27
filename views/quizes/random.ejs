@@ -1,5 +1,10 @@
-<form method="get" action="/quizes/<%= quizRandom[0] %>/answer">
-  Pregunta: <%=  quizRandom[0].pregunta %> <p>
+<form method="get" action="/quizes/<%= quizRandom[0].id %>/answer">
+  Pregunta: <%  if (quizRandom[0].pregunta) {%>
+    <%= quizRandom[0].pregunta %>
+  <% }else { %>
+    <p> recargue la pagina, por favor</p>
+  <% }%>
+  <p>
   <input type="text" name="respuesta" value="Respuesta"/>
   <input type="submit" value="Enviar">
 </form>

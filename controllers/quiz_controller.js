@@ -41,8 +41,8 @@ exports.random = function(req,res,next) {
   models.Quiz.findAll(
     {where:['id = ?', getRandomInt(1, numFilas)]}
   ).then(function(quizes) {
-    res.render('quizes/random', {quizRandom: quizes, errors: []});
-    console.log("CONSOLA LOG"+ quizRandom.length);
+    res.render('quizes/random', {quizRandom:quizes, errors: []});
+    alert("CONSOLA LOG"+ quizRandom.length);
   }
 ).catch(function(error){next(error)});
 };
