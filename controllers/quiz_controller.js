@@ -42,14 +42,15 @@ exports.index = function(req, res, next) {
 exports.random = function(req,res,next) {
   console.log ("CONSOLE LOG numID " + numID);
   models.Quiz.findOne({ where: {id: numID} }).then(function(quiz) {
-    if (quiz)
+    if (quiz){
       res.render('quizes/random', {quiz:quiz, errors: []});
-    else {
-      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-    }
-  }).catch(function(error){next(error)});
+    }else{
+      models.Quiz.findAll().then(function(quizes) {
+        res.render('quizes/index.ejs', {quizes: quizes, errors: []})
+    })
+  }}
+  ).catch(function(error){next(error)});
 };
-
 
 // GET /quizes/:id
 exports.show = function(req, res) {
