@@ -42,7 +42,7 @@ exports.random = function(req,res,next) {
     {where:['id = ?', getRandomInt(1, numFilas)]}
   ).then(function(quizes) {
     res.render('quizes/random', {quizRandom: quizes, errors: []});
-    console.log("CONSOLA LOG"+ quizes.length);
+    console.log("CONSOLA LOG"+ quizRandom.length);
   }
 ).catch(function(error){next(error)});
 };
