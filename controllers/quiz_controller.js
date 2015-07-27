@@ -45,7 +45,7 @@ exports.random = function(req,res,next) {
     if (quiz)
       res.render('quizes/random', {quiz:quiz, errors: []});
     else {
-      res.render('quizes/index.ejs', {quiz: quiz, errors: []});
+      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
     }
   }).catch(function(error){next(error)});
 };
