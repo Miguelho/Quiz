@@ -36,8 +36,6 @@ exports.index = function(req, res, next) {
 };
 
 
-
-
 // GET /quizes aleatorio
 exports.random = function(req,res,next) {
   console.log ("CONSOLE LOG numID " + numID);
@@ -50,7 +48,8 @@ exports.random = function(req,res,next) {
     })
   }}
   ).catch(function(error){next(error)});
-};
+}
+
 
 // GET /quizes/:id
 exports.show = function(req, res) {
