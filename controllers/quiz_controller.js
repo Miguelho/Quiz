@@ -1,5 +1,5 @@
 var models= require('../models/models.js');
-var numFilas=null;
+var numID=null;
 // Autoload :id
 exports.load = function(req, res, next, quizId) {
   models.Quiz.find(quizId).then(
@@ -11,13 +11,17 @@ exports.load = function(req, res, next, quizId) {
     }
   ).catch(function(error){next(error)});
 };
+//Funcion para obtener una fila al azar de la base de datos
+function getRandomInt(min, max) {
+  return parseInt(Math.floor(Math.random() * (max - min + 1)) + min);
+}
 
 // GET /quizes
 exports.index = function(req, res, next) {
   var porciento = '%';
   if (req.query.search && req.query.search !== '') {
     var keys= porciento+ req.query.search.replace(' ', porciento) + porciento;
-    models.Quiz.findAll({where:['pregunta like ?', keys],order: 'pregunta ASC'}).then(function(quizes) {
+    models.Quiz.findAll({where:['pregunta like ?', keys], order: 'pregunta ASC'}).then(function(quizes) {
       res.render('quizes/index.ejs', {quizes: quizes, errors: []});
       console.log("CONSOLA LOG"+ quizes.length);
 
@@ -25,29 +29,25 @@ exports.index = function(req, res, next) {
 }else {
   models.Quiz.findAll().then(function(quizes) {
     res.render('quizes/index.ejs', {quizes: quizes, errors: []})
-    numFilas = parseInt(quizes.length);
+    numID = getRandomInt(1,quizes.length);
   }
 
   )};
 };
 
-function getRandomInt(min, max) {
-  return parseInt(Math.floor(Math.random() * (max - min + 1)) + min);
-}
+
 
 
 // GET /quizes aleatorio
 exports.random = function(req,res,next) {
-  models.Quiz.findAll(
-    {where:['id = ?', getRandomInt(1, numFilas)]}
-  ).then(function(quizes) {
-    if (quizes.length ==! 0)
-      res.render('quizes/random', {quizRandom:quizes, errors: []});
+  console.log ("CONSOLE LOG numID " + numID);
+  models.Quiz.findOne({ where: {id: numID} }).then(function(quiz) {
+    if (quiz)
+      res.render('quizes/random', {quiz:quiz, errors: []});
     else {
-      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+      res.render('quizes/index.ejs', {quiz: quiz, errors: []});
     }
-  }
-).catch(function(error){next(error)});
+  }).catch(function(error){next(error)});
 };
 
 

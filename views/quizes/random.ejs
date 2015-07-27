@@ -1,6 +1,6 @@
-<form method="get" action="/quizes/<%= quizRandom[0].id %>/answer">
-  Pregunta: <%  if (quizRandom[0].pregunta) {%>
-    <%= quizRandom[0].pregunta %>
+<form method="get" action="/quizes/<%= quiz.id %>/answer">
+  Pregunta: <%  if (quiz.pregunta) {%>
+    <%= quiz.pregunta %>
   <% }else{ %>
    <p> recargue la pagina, por favor</p>
   <a href='/views/index.ejs'><input type="button" value ="Recargar" </a>
