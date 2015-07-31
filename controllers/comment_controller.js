@@ -11,6 +11,12 @@ exports.create = function(req, res) {
       texto: req.body.comment.texto,
       QuizId: req.params.quizId
   });
+
+  if (!req.body.comment.texto){
+    console.log("CONSOLE LOG : !req.params.quizId" + req.params.quizId);
+    res.redirect('/quizes/' + req.params.quizId)
+  }
+  
   comment.validate().then(function(err){
     if (err) {
       res.render('comments/new.ejs', {comment: comment, errors: err.errors});
