@@ -5,7 +5,12 @@
       <input type="text" name="search" />
       <input type="submit" value="Enviar"/>
       <br/>
-      <a href="/quizes/new"><button type="button">Añadir pregunta</button></a>
+    <!--
+      <% if(session.user) { %>
+        <a href="/quizes/new"><button type="button">Añadir pregunta</button></a>
+      <% } %>
+    -->
+    <a href="/quizes/new"><button type="button">Añadir pregunta</button></a>
       <!--<a href="/quizes"><button type="button">Pregunta random</button></a>-->
 
 </legend>
@@ -20,15 +25,11 @@
 <table>
   <% var i; for (i=0; i < quizes.length; i++) { %>
   <tr><td><strong><%= quizes[i].tematica %></strong>: <a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
-
-  <td><form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
-
-    <button type="submit" OnClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">Borrar
-    </button></a>
-  </form></td>
-
-  <td><a href="quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td></tr>
-
+    <% if(session.user) { %>
+      <td><form method="post" action="quizes/<%= quizes[i].id %>?_method=delete"><button type="submit" OnClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">Borrar</button></a></form></td>
+      <td><a href="quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td>
+    <% } %>
+</tr>
   <% } %>
 
   <p><%= quizes.length  %></p>
